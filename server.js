@@ -35,13 +35,13 @@ app.get('*', function(req, res){
 const latestComic = fetch('http://xkcd.com/info.0.json');
 latestComic.then(response => {
   return response.json()
-.then(data => {
+  .then(data => {
     latestNum = data.num;
     return;
-})
+  })
 }).catch(error => {
-console.log("e:", error);
-});
+    console.log("e:", error);
+  });
 
 //generates random number between 0 and latest comic issue number
 function getRandomInt(min, max) {
