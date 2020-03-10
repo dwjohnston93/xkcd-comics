@@ -19,7 +19,7 @@
   "homepage": "https://github.com/dwjohnston93/xkcd-comics#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "request": "^2.88.2",
+    "node-fetch": "^2.6.0",
     "serve-index": "^1.9.1"
   },
   "devDependencies": {
