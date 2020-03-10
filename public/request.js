@@ -1,44 +1,53 @@
-// function getRandom(){
-//     const promise = fetch("http://localhost:8080/random")
-//     promise.then(resp => updateHTML(resp.json()))
-//     .catch((error) => {
-//         console.log("e:", error)
-//     })
-// }
-
-// const getRandom = function(){
-//     let res = await fetch("http://localhost:8080/random");
-//     updateHTML(res.json())
-// }
-
-// const getRandom = function(){
-//     return new Promise(function(resolve){
-//         resolve(fetch("http://localhost:8080/random"));
-//     })
-// }
-
-// async function updateHTML(){
-//     let comic  = await getRandom();
-//     console.log("comic:", comic);
-//     let img = document.createElement('img');
-//     console.log("comic.img:", comic.img)
-//     img.src = comic.img;
-//     document.body.append(img);
-// }
+function updateHTML(comic){
+    let title = document.getElementById('comic-title');
+    let img = document.getElementById('comic-img');
+    if(title.innerHTML){
+        title.innerHTML = comic.title;
+        img.src = comic.img;
+        img.alt = comic.alt;
+    } else{
+        title.innerHTML = comic.title;
+        img.src = comic.img;
+        img.alt = comic.alt;
+        //add prev and next buttons to page after intial random call
+        // let prev = document.createElement('button');
+        // let next = document.createElement('button');
+        // let buttons = document.getElementById('buttons');
+        // buttons.appendChild(prev)
+        // buttons.appendChild(next);
+        // prev.onclick = "getPrev";
+        // next.onclick = "getNext";
+        // prev.innerHTML = "<Prev";
+        // next.innerHTML = "Next>";
+    }
+   
+}
 
 const getRandom = () => {
     const promise = fetch("http://localhost:8080/random");
     promise.then(res => {
         return res.json();
     }).then(comic => {
-        console.log("comic:", comic)
-        let title = document.createElement('h2');
-        title.innerHTML = comic.title;
-        document.body.append(title);
-        let img = document.createElement('img');
-        img.src = comic.img;
-        img.alt = comic.alt;
-        document.body.append(img);
+        updateHTML(comic)
+    })
+}
+
+const getPrev = () => {
+    const promise = fetch("http://localhost:8080/prev");
+    promise.then(res => {
+        return res.json();
+    }).then(comic => {
+       updateHTML(comic)
+    })
+}
+
+const getNext = () => {
+    console.log("next:", next)
+    const promise = fetch("http://localhost:8080/next");
+    promise.then(res => {
+        return res.json();
+    }).then(comic => {
+        updateHTML(comic)
     })
 }
 

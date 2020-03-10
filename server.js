@@ -27,6 +27,32 @@ app.get('/random', (req, res) => {
     });
 });
 
+app.get('/prev', (req, res) => {
+    randomNum--;
+    const prevComic = fetch(`http://xkcd.com/${randomNum}/info.0.json`);
+    prevComic.then(response => {
+     return response.json();
+    }).then(data => {
+        res.json(data)
+    }).catch(error => {
+    console.log("e:", error);
+    });
+});
+
+
+app.get('/next', (req, res) => {
+    randomNum++;
+    const prevComic = fetch(`http://xkcd.com/${randomNum}/info.0.json`);
+    prevComic.then(response => {
+     return response.json();
+    }).then(data => {
+        res.json(data)
+    }).catch(error => {
+    console.log("e:", error);
+    });
+});
+
+
 app.get('*', function(req, res){
     res.sendFile('public/404.html', { root: __dirname });
   });
