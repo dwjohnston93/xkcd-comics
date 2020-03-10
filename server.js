@@ -13,4 +13,8 @@ app.get('/random', (req, res) => {
     res.json({a : 1})
 });
 
+app.get('*', function(req, res){
+    res.sendFile('public/404.html', { root: __dirname });
+  });
+
 app.listen(8080, () => console.log('app listening on port 8080'));
