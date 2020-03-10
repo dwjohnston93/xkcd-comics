@@ -16,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/dwjohnston93/xkcd-comics/issues"
   },
-  "homepage": "https://github.com/dwjohnston93/xkcd-comics#readme"
+  "homepage": "https://github.com/dwjohnston93/xkcd-comics#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "request": "^2.88.2",
+    "serve-index": "^1.9.1"
+  },
+  "devDependencies": {
+    "webpack": "^4.42.0"
+  }
 }

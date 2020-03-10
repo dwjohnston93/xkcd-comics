@@ -1,14 +1,16 @@
-const http = require('http');
+const express = require('express');
+const app = express();
+const serveIndex = require('serve-index');
+const path = require('path');
 
-const hostname = 'localhost';
-const port = 8080;
+app.use(express.static(path.join(__dirname, 'public')))
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end("Hello world")
+app.get('/', (req, res) => {
+    res.sendFile('public/index.html', { root: __dirname });
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+app.get('/random', (req, res) => {
+    res.json({a : 1})
 });
+
+app.listen(8080, () => console.log('app listening on port 8080'));
