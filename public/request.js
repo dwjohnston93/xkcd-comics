@@ -10,15 +10,15 @@ function updateHTML(comic){
         img.src = comic.img;
         img.alt = comic.alt;
         //add prev and next buttons to page after intial random call
-        // let prev = document.createElement('button');
-        // let next = document.createElement('button');
-        // let buttons = document.getElementById('buttons');
-        // buttons.appendChild(prev)
-        // buttons.appendChild(next);
-        // prev.onclick = "getPrev";
-        // next.onclick = "getNext";
-        // prev.innerHTML = "<Prev";
-        // next.innerHTML = "Next>";
+        let prev = document.createElement('button');
+        let next = document.createElement('button');
+        prev.setAttribute("onclick","getPrev()");
+        next.setAttribute("onclick","getNext()");
+        let buttons = document.getElementById('buttons');
+        prev.innerText = "<Prev";
+        next.innerText = "Next>";
+        buttons.prepend(prev);
+        buttons.appendChild(next);
     }
    
 }
@@ -42,7 +42,6 @@ const getPrev = () => {
 }
 
 const getNext = () => {
-    console.log("next:", next)
     const promise = fetch("http://localhost:8080/next");
     promise.then(res => {
         return res.json();

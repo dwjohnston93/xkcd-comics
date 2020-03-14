@@ -8,6 +8,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 //most recent XKCD comic number which will be updated after initial page load through latestComic
 let latestNum = 2278;
+let randomNum;
 
 app.get('/', (req, res) => {
     console.log("hit")
@@ -16,7 +17,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/random', (req, res) => {
-    let randomNum = getRandomInt(1, latestNum)
+    randomNum = getRandomInt(1, latestNum)
     const randomComic = fetch(`http://xkcd.com/${randomNum}/info.0.json`);
     randomComic.then(response => {
      return response.json();
