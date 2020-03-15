@@ -1,24 +1,43 @@
 const express = require('express');
 const app = express();
-const serveIndex = require('serve-index');
 const path = require('path');
 const fetch = require("node-fetch");
+const bodyParser = require('body-parser');
+
+app.listen(8080, () => console.log('app listening on port 8080'));
 
 app.use(express.static(path.join(__dirname, 'public')))
 
+//parse application/json
+app.use(bodyParser.json());
+
 //most recent XKCD comic number which will be updated after initial page load through latestComic
-let latestNum = 2278;
-let randomNum;
+let latestNum;
+
+//currently displayed or request comic number
+let currentNum;
 
 app.get('/', (req, res) => {
-    console.log("hit")
     latestComic()
     res.sendFile('public/index.html', { root: __dirname });
 });
 
+
+app.post('/num', (req, res) => {
+    currentNum = req.body.num;
+    const prevComic = fetch(`http://xkcd.com/${currentNum}/info.0.json`);
+    prevComic.then(response => {
+     return response.json();
+    }).then(data => {
+        res.json(data)
+    }).catch(error => {
+    console.log("e:", error);
+    });
+});
+
 app.get('/random', (req, res) => {
-    randomNum = getRandomInt(1, latestNum)
-    const randomComic = fetch(`http://xkcd.com/${randomNum}/info.0.json`);
+    currentNum = getRandomInt(1, latestNum)
+    const randomComic = fetch(`http://xkcd.com/${currentNum}/info.0.json`);
     randomComic.then(response => {
      return response.json();
     }).then(data => {
@@ -29,8 +48,8 @@ app.get('/random', (req, res) => {
 });
 
 app.get('/prev', (req, res) => {
-    randomNum--;
-    const prevComic = fetch(`http://xkcd.com/${randomNum}/info.0.json`);
+    currentNum--;
+    const prevComic = fetch(`http://xkcd.com/${currentNum}/info.0.json`);
     prevComic.then(response => {
      return response.json();
     }).then(data => {
@@ -39,11 +58,10 @@ app.get('/prev', (req, res) => {
     console.log("e:", error);
     });
 });
-
 
 app.get('/next', (req, res) => {
-    randomNum++;
-    const prevComic = fetch(`http://xkcd.com/${randomNum}/info.0.json`);
+    currentNum++;
+    const prevComic = fetch(`http://xkcd.com/${currentNum}/info.0.json`);
     prevComic.then(response => {
      return response.json();
     }).then(data => {
@@ -52,7 +70,6 @@ app.get('/next', (req, res) => {
     console.log("e:", error);
     });
 });
-
 
 app.get('*', function(req, res){
     res.sendFile('public/404.html', { root: __dirname });
@@ -76,4 +93,3 @@ function getRandomInt(min, max) {
 }
 
 
-app.listen(8080, () => console.log('app listening on port 8080'));

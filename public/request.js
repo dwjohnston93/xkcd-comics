@@ -2,11 +2,11 @@ function updateHTML(comic){
     let title = document.getElementById('comic-title');
     let img = document.getElementById('comic-img');
     if(title.innerHTML){
-        title.innerHTML = comic.title;
+        title.innerHTML = `#${comic.num} ${comic.title}`;
         img.src = comic.img;
         img.alt = comic.alt;
     } else{
-        title.innerHTML = comic.title;
+        title.innerHTML = `#${comic.num} ${comic.title}`;
         img.src = comic.img;
         img.alt = comic.alt;
         //add prev and next buttons to page after intial random call
@@ -23,17 +23,41 @@ function updateHTML(comic){
    
 }
 
-const getRandom = () => {
-    const promise = fetch("http://localhost:8080/random");
+let baseURL = "http://localhost:8080"
+
+//GET KEYBOARD ENTER FOR THIS TOO
+const getNum = () => {
+    let number = document.getElementById("search").value;
+    let numObj = {num : number};
+    console.log("numObj:", numObj)
+    const promise = fetch(`${baseURL}/num`, {
+        method : 'POST',
+        headers: { 
+            "Content-Type": "application/json",
+            "Accept": "application/json" 
+        },
+        body : JSON.stringify(numObj)
+    });
     promise.then(res => {
         return res.json();
     }).then(comic => {
+        console.log("comic:", comic)
+        updateHTML(comic)
+    })
+}
+
+const getRandom = () => {
+    const promise = fetch(`${baseURL}/random`);
+    promise.then(res => {
+        return res.json();
+    }).then(comic => {
+        console.log("comic:", comic)
         updateHTML(comic)
     })
 }
 
 const getPrev = () => {
-    const promise = fetch("http://localhost:8080/prev");
+    const promise = fetch(`${baseURL}/prev`);
     promise.then(res => {
         return res.json();
     }).then(comic => {
@@ -42,7 +66,7 @@ const getPrev = () => {
 }
 
 const getNext = () => {
-    const promise = fetch("http://localhost:8080/next");
+    const promise = fetch(`${baseURL}/next`);
     promise.then(res => {
         return res.json();
     }).then(comic => {
