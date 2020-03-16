@@ -1,4 +1,4 @@
-//function updates HTML with latest comic received from server, and current comic number
+//updates HTML with latest comic received from server, and current comic number
 function updateHTML(comic){
     let title = document.getElementById('comic-title');
     let img = document.getElementById('comic-img');
