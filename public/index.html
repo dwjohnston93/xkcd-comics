@@ -6,12 +6,12 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="request.js"></script>
   </head>
-  <body id="body">
+  <body onload="getHighest()">
     <div id="box">
         <h1>XKCD Comics</h1>
-        <form name="myForm" onsubmit="event.preventDefault(); getNum();">
-          Get an issue by number: <input type="number" id="search" required min="1" max="3000">
-          <input type="submit" value="Submit">
+        <form onsubmit="event.preventDefault(); getNum();">
+          Get an issue by number: <input type="number" id="search" required min="1" max="0">
+          <input class="button" type="submit" value="Submit">
         </form>
         <!-- <label for="search">Get an issue by number:
             <input type="number" id="search" name="search" required min="1" maxlength="5" size="5">
@@ -20,7 +20,7 @@
         <h2 id="comic-title"></h2>
         <img id="comic-img">
         <div id="buttons">
-            <button onclick="getRandom()">Random</button>
+            <button class="button" onclick="getRandom()">Random</button>
         </div> 
     </div>
   </body>
