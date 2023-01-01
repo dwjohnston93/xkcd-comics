@@ -24,6 +24,6 @@
     "serve-index": "^1.9.1"
   },
   "devDependencies": {
-    "webpack": "^4.42.0"
+    "webpack": "^5.75.0"
   }
 }
